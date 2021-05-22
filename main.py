@@ -64,13 +64,17 @@ def create_new_user():
     response = create_new_us.json()
     if response["message"] == "Success.":
         print(response["message"])
+    elif response["message"] == "This user already exist.":
+        print(response["message"])
+        write_user_data()
+
     else:
         print(response["message"])
         print("is done:", response["isSuccess"])
 
 
 def colour_choice():
-    COLOR = input("What color you want to use? (green, red, blue, yellow, purple, black) ").lower()
+    COLOR = input("What color you want to use? (green, red, blue, yellow, purple, black): ").lower()
     if COLOR == "EXIT":
         quit("Bye.. Bye...")
     if COLOR == "red":
@@ -110,6 +114,10 @@ def add_graph():
     response = response.json()
     if response["message"] == "Success.":
         print(response["message"])
+    elif response["message"] == f"User `{USER}` does not exist or the token is wrong.":
+        print(response["message"])
+        write_user_data()
+        add_graph()
     else:
         print(response["message"])
         print("is done:", response["isSuccess"])
@@ -169,6 +177,10 @@ def add_pixel():
     response = response.json()
     if response["message"] == "Success.":
         print(response["message"])
+    elif response["message"] == f"User `{USER}` does not exist or the token is wrong.":
+        print(response["message"])
+        write_user_data()
+        add_pixel()
     else:
         print(response["message"])
         print("is done:", response["isSuccess"])
