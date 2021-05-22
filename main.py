@@ -1,4 +1,5 @@
 import requests
+from datetime import datetime
 
 pixela_endpoint = "https://pixe.la/v1/users"
 
@@ -104,27 +105,38 @@ def add_graph():
         print("is done:", response["isSuccess"])
 
 
-
 def date_write():
-    year = input("Year: ")
-    month = input("Month: ")
-    if len(month) == 1:
-        month = f"0{month}"
-    day = input("Day: ")
-    if year == "EXIT":
-        quit("Bye.. Bye...")
-    if len(day) == 1:
-        day = f"0{day}"
-    DATE = f"{year}{month}{day}"
-    try:
-        if len(DATE) != 8 or int(month) > 12 or int(month) <= 0 or int(day) <= 0 or int(day) > 31:
+    today_time = datetime.now()
+    date_today = today_time.strftime("%Y%m%d")
+    today = input("Today? (Y/N) ").upper()
+
+    if today == "Y":
+        return date_today
+    elif today == "N":
+        year = input("Year: ")
+        month = input("Month: ")
+        if len(month) == 1:
+            month = f"0{month}"
+        day = input("Day: ")
+        if year == "EXIT":
+            quit("Bye.. Bye...")
+        if len(day) == 1:
+            day = f"0{day}"
+        DATE = f"{year}{month}{day}"
+        try:
+            if len(DATE) != 8 or int(month) > 12 or int(month) <= 0 or int(day) <= 0 or int(day) > 31 \
+                    or int(DATE) > int(date_today):
+                print("Wrong data! Try again!\n")
+                date_write()
+            else:
+                return DATE
+        except ValueError:
             print("Wrong data! Try again!\n")
             date_write()
-        else:
-            return DATE
-    except ValueError:
-        print("Wrong data! Try again!\n")
+    else:
         date_write()
+
+
 
 
 def quantity_ans():
@@ -152,7 +164,6 @@ def add_pixel():
     else:
         print(response["message"])
         print("is done:", response["isSuccess"])
-
 
 
 def what_do():
