@@ -29,12 +29,23 @@ def confirm_new_user():
         confirm_new_user()
 
 
+def write_token():
+    global TOKEN
+    token_check = input("Write your token: ")
+    if len(token_check) < 8 or len(token_check) > 128:
+        print("Wrong token!\n"
+              "minimum characters - 8\n"
+              "maximum characters - 128")
+        write_token()
+    TOKEN = token_check
+
+
 def write_user_data():
     global USER, TOKEN
     confirm_new_us = confirm_new_user()
     with open("user_data.txt", "w") as file:
         USER = input("Write your user name: ")
-        TOKEN = input("Write your token (minimum 8 characters): ")
+        write_token()
         us_data = f"{USER}\n{TOKEN}"
         file.write(us_data)
     if confirm_new_us == "N":
@@ -56,7 +67,6 @@ def create_new_user():
     else:
         print(response["message"])
         print("is done:", response["isSuccess"])
-
 
 
 def colour_choice():
@@ -137,8 +147,6 @@ def date_write():
         date_write()
 
 
-
-
 def quantity_ans():
     QUANTITY = input("Quantity: ")
     return QUANTITY
@@ -193,12 +201,9 @@ try:
 except FileNotFoundError:
     write_user_data()
 
-
 GAME_IS_ON = True
 while GAME_IS_ON:
     what_do()
     game = input("Do you want exit? (Y/N) ").upper()
     if game == "Y":
         GAME_IS_ON = False
-
-
