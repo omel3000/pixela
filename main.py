@@ -1,8 +1,6 @@
 import requests
 from datetime import datetime
 
-pixela_endpoint = "https://pixe.la/v1/users"
-
 
 def confirm_user():
     global USER
@@ -197,6 +195,10 @@ def what_do():
         add_pixel()
 
 
+pixela_endpoint = "https://pixe.la/v1/users"
+GAME_IS_ON = True
+
+
 try:
     with open("user_data.txt", "r") as file:
         user_data = file.readlines()
@@ -213,7 +215,6 @@ try:
 except FileNotFoundError:
     write_user_data()
 
-GAME_IS_ON = True
 while GAME_IS_ON:
     what_do()
     game = input("Do you want exit? (Y/N) ").upper()
